@@ -12,16 +12,22 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
+const Drawer = createDrawerNavigator();
 
 const Stack = createStackNavigator();
 // const Tab = createMaterialTopTabNavigator();
-const Tab = createMaterialBottomTabNavigator();
+// const Drawer = createMaterialTopTabNavigator();
 
 function ScreenA({ navigation }) {
 
   const onPressHandler = () => {
-    navigation.navigate('Screen_B');
+    // navigation.navigate('Screen_B');
+    navigation.closeDrawer();
+    navigation.openDrawer();
+    navigation.toggleDrawer();
   }
 
   return (
@@ -64,80 +70,133 @@ function ScreenB({ navigation }) {
     </View>
   )
 }
+// onst Drawer = createDrawerNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-      screenOptions={({route})=>({
-        tabBarIcon:({focused, size, color})=>{
-          let iconName;
-          if(route.name==='Screen_A'){
-            iconName='autoprefixer'
-            size=focused? 25:10
-            // color=focused ? '#f0f' : '#555' 
-
+      <Drawer.Navigator
+        initialRouteName="Screen_A"
+        drawerPosition='left'
+        drawerType="front"
+        edgeWidth={100}
+        hideStatusBar={false}
+        overlayColor='#00000090'
+        drawerStyle={{
+          backgroundColor: '#e6e6e6',
+          width: 250
+        }}
+        screenOptions={{
+          headerShown: true,
+          swipeEnabled: true,
+          gestureEnabled: true,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#0080ff'
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontSize: 25,
+            fontWeight: 'bold'
           }
-          else if(route.name==='Screen_B'){
-            iconName='btc'
-            size=focused? 25:10
-            // color=focused ? '#f0f' : '#555'
-
-
-
-
-          }
-
-          return (
-            <FontAwesome5 
-            
-            name={iconName}
-            size={size}
-            color={color}
-            />
-          )
-        }
-      }
-
-      )}
-      createBottomTabNavigator={{
-        activeTintColor:'#f0f',
-        inactiveTintColor:"#555",
-        activeBackgroundColor:'#fff',
-        
-
-      }}
-       
+        }}
       >
-        <Tab.Screen
+        <Drawer.Screen
           name="Screen_A"
           component={ScreenA}
-        options={{
-          // header: () => null
-          tabBarBadge:3
-        }}
-        
+          options={{
+            title: 'Screen_A Title',
+            drawerIcon: ({ focused }) => (
+              <FontAwesome5
+                name="autoprefixer"
+                size={focused ? 25 : 20}
+                color={focused ? '#0080ff' : '#999999'}
+              />
+            )
+          }}
         />
-        <Tab.Screen
+        <Drawer.Screen
           name="Screen_B"
           component={ScreenB}
+          options={{
+            title: 'Screen_B Title',
+            drawerIcon: ({ focused }) => (
+              <FontAwesome5
+                name="btc"
+                size={focused ? 25 : 20}
+                color={focused ? '#0080ff' : '#999999'}
+              />
+            )
+          }}
         />
-      </Tab.Navigator>
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }
 
+export default App;
+
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    alignItems: 'center',
+    width:'100%'
+  },
+  text: {
+    color: '#000000',
+    fontSize: 20,
+    margin: 10,
+    textAlign: 'center',
+  },
+  input: {
+    width: 200,
+    borderWidth: 1,
+    borderColor: '#555',
+    borderRadius: 5,
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  button: {
+    width: 150,
+    height: 50,
+    alignItems: 'center',
+  },
+  centered_view: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#00000099'
+  },
+  warning_modal: {
+    width: 300,
+    height: 300,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#000',
+    borderRadius: 20,
+  },
+  warning_title: {
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ff0',
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+  },
+  warning_body: {
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  text: {
-    fontSize: 40,
-    fontWeight: 'bold',
+  warning_button: {
+    backgroundColor: '#00ffff',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  image: {
+    width: 100,
+    height: 100,
     margin: 10,
   }
-})
-
-export default App;
+});

@@ -12,195 +12,49 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
-// import { createDrawerNavigator } from '@react-navigation/drawer';
+import { 
+  BungeeShade_400Regular 
+} from '@expo-google-fonts/bungee-shade'
+import {useFonts} from 'expo-font'
 
-// const Drawer = createDrawerNavigator();
+import AppLoading from 'expo-app-loading'
 
-const Stack = createMaterialTopTabNavigator();
-// const Tab = createMaterialTopTabNavigator();
-// const Drawer = createMaterialTopTabNavigator();
 
-function ScreenA({ navigation }) {
 
-  const onPressHandler = () => {
-    navigation.navigate('Screen_B',{
-      itemName:'Items section'
-    });
 
-  }
 
-  return (
-    <View style={styles.body}>
-      <Text style={styles.text}>
-        Screen A
-      </Text>
-      <Pressable
-        onPress={onPressHandler}
-        style={({ pressed }) => ({ backgroundColor: pressed ? '#ddd' : '#0f0' })}
-      >
-        <Text style={styles.text}>
-          Go to Screen B
-        </Text>
-      </Pressable>
-    </View>
-  )
-}
 
-function ScreenB({ navigation, route }) {
-  const {itemName}=route.params
 
-  const onPressHandler = () => {
-    // navigation.navigate('Screen_A');
-    // navigation.goBack();
-    navigation.setParams({itemName:'dsaj'})
-  }
-
-  return (
-    <View style={styles.body}>
-      <Text style={styles.text}>
-        Screen B
-      </Text>
-      <Pressable
-        onPress={onPressHandler}
-        style={({ pressed }) => ({ backgroundColor: pressed ? '#ddd' : '#0f0' })}
-      >
-        <Text style={styles.text}>
-          Go Back to Screen A
-        Item Name:  {itemName}
-        </Text>
-      </Pressable>
-    </View>
-  )
-}
-// onst Drawer = createDrawerNavigator();
 
 function App() {
+  let [fontsLoaded, error]=useFonts({
+    BungeeShade_400Regular,
+    'BungeeSpice-Regular':require('./assets/fonts/BungeeSpice-Regular.ttf')
+  })
+  
+  
+  // if(!fontsLoaded)
+  // {
+  //   return <AppLoading />
+  // }
+  
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Screen_A"
-        drawerPosition='left'
-        drawerType="front"
-        edgeWidth={100}
-        hideStatusBar={false}
-        overlayColor='#00000090'
-        drawerStyle={{
-          backgroundColor: '#e6e6e6',
-          width: 250
-        }}
-        screenOptions={{
-          headerShown: true,
-          swipeEnabled: true,
-          gestureEnabled: true,
-          headerTitleAlign: 'center',
-          headerStyle: {
-            backgroundColor: '#0080ff'
-          },
-          headerTintColor: '#ffffff',
-          headerTitleStyle: {
-            fontSize: 25,
-            fontWeight: 'bold'
-          }
-        }}
+    <View
+    style={{
+      flex:1,
+      justifyContent:'center',
+      alignItems:'center'
+    }}
+    >
+      <Text
+      style={{
+        // fontFamily:'BungeeShade_400Regular'
+        fontFamily:'BungeeSpice-Regular'
+      }}
       >
-        <Stack.Screen
-          name="Screen_A"
-          component={ScreenA}
-          options={{
-            title: 'Screen_A Title',
-            drawerIcon: ({ focused }) => (
-              <FontAwesome5
-                name="autoprefixer"
-                size={focused ? 25 : 20}
-                color={focused ? '#0080ff' : '#999999'}
-              />
-            )
-          }}
-        />
-        <Stack.Screen
-          name="Screen_B"
-          component={ScreenB}
-          options={{
-            title: 'Screen_B Title',
-            drawerIcon: ({ focused }) => (
-              <FontAwesome5
-                name="btc"
-                size={focused ? 25 : 20} 
-                color={focused ? '#0080ff' : '#999999'}
-              />
-            )
-          }}
-          initialParams={{itemName:'asljfrghyi'}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
-}
+        App fonts
+      </Text>
+    </View>
+  )}
 
-export default App;
-
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    alignItems: 'center',
-    width:'100%'
-  },
-  text: {
-    color: '#000000',
-    fontSize: 20,
-    margin: 10,
-    textAlign: 'center',
-  },
-  input: {
-    width: 200,
-    borderWidth: 1,
-    borderColor: '#555',
-    borderRadius: 5,
-    textAlign: 'center',
-    fontSize: 20,
-    marginBottom: 10,
-  },
-  button: {
-    width: 150,
-    height: 50,
-    alignItems: 'center',
-  },
-  centered_view: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#00000099'
-  },
-  warning_modal: {
-    width: 300,
-    height: 300,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 20,
-  },
-  warning_title: {
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ff0',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-  },
-  warning_body: {
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  warning_button: {
-    backgroundColor: '#00ffff',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    margin: 10,
-  }
-});
+  export default App;

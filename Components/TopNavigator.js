@@ -15,8 +15,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 
 const Stack = createStackNavigator();
-// const Tab = createMaterialTopTabNavigator();
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 function ScreenA({ navigation }) {
 
@@ -114,7 +113,7 @@ function App() {
           component={ScreenA}
         options={{
           // header: () => null
-          tabBarBadge:3
+          // tabBarBadge:3
         }}
         
         />

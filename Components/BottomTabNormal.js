@@ -10,13 +10,11 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+
 
 
 const Stack = createStackNavigator();
-// const Tab = createMaterialTopTabNavigator();
-const Tab = createMaterialBottomTabNavigator();
+const Tab=createBottomTabNavigator()
 
 function ScreenA({ navigation }) {
 

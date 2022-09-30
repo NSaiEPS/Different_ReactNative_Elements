@@ -56,8 +56,8 @@ export const LoginPage = ({navigation}) => {
         <View style={styles.body} >
             <Image
                 style={styles.logo}
-                source={{
-                    uri:"https://react-native-async-storage.github.io/async-storage/img/logo.svg"
+                source={
+                   { uri: "https://react-native-async-storage.github.io/async-storage/img/hero_db.svg"
                 }}
             />
             <Text style={styles.text}>
@@ -214,44 +214,44 @@ const styles = StyleSheet.create({
 
 
 
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { HomePage, LoginPage } from './Components/AsynchStorage';
+// import React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createStackNavigator } from '@react-navigation/stack';
+// import { HomePage, LoginPage } from './Components/AsynchStorage';
 
-const Stack = createStackNavigator();
+// const Stack = createStackNavigator();
 
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={{
-          headerTitleAlign: 'center',
-          headerStyle: {
-            backgroundColor: '#0080ff'
-          },
-          headerTintColor: '#ffffff',
-          headerTitleStyle: {
-            fontSize: 25,
-            fontWeight: 'bold'
-          }
-        }}
-      >
-        <Stack.Screen
-          name="Login"
-          component={LoginPage}
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomePage}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  )
-}
+// function App() {
+//   return (
+//     <NavigationContainer>
+//       <Stack.Navigator
+//         initialRouteName="Login"
+//         screenOptions={{
+//           headerTitleAlign: 'center',
+//           headerStyle: {
+//             backgroundColor: '#0080ff'
+//           },
+//           headerTintColor: '#ffffff',
+//           headerTitleStyle: {
+//             fontSize: 25,
+//             fontWeight: 'bold'
+//           }
+//         }}
+//       >
+//         <Stack.Screen
+//           name="Login"
+//           component={LoginPage}
+//           options={{
+//             headerShown: false,
+//           }}
+//         />
+//         <Stack.Screen
+//           name="Home"
+//           component={HomePage}
+//         />
+//       </Stack.Navigator>
+//     </NavigationContainer>
+//   )
+// }
 
-export default App;
+// export default App;

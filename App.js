@@ -1,60 +1,41 @@
-
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { 
-  BungeeShade_400Regular 
-} from '@expo-google-fonts/bungee-shade'
-import {useFonts} from 'expo-font'
+import { HomePage, LoginPage } from './Components/AsynchStorage';
 
-import AppLoading from 'expo-app-loading'
-
-
-
-
-
-
-
+const Stack = createStackNavigator();
 
 function App() {
-  let [fontsLoaded, error]=useFonts({
-    BungeeShade_400Regular,
-    'BungeeSpice-Regular':require('./assets/fonts/BungeeSpice-Regular.ttf')
-  })
-  
-  
-  // if(!fontsLoaded)
-  // {
-  //   return <AppLoading />
-  // }
-  
   return (
-    <View
-    style={{
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center'
-    }}
-    >
-      <Text
-      style={{
-        // fontFamily:'BungeeShade_400Regular'
-        fontFamily:'BungeeSpice-Regular'
-      }}
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName="Login"
+        screenOptions={{
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: '#0080ff'
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontSize: 25,
+            fontWeight: 'bold'
+          }
+        }}
       >
-        App fonts
-      </Text>
-    </View>
-  )}
+        <Stack.Screen
+          name="Login"
+          component={LoginPage}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomePage}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
 
-  export default App;
+export default App;

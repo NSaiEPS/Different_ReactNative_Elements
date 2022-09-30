@@ -37,8 +37,8 @@ function ScreenA({ navigation }) {
 function ScreenB({ navigation }) {
 
   const onPressHandler = () => {
-    navigation.navigate('Screen_A');
-    // navigation.goBack();
+    // navigation.navigate('Screen_A');
+    navigation.goBack();
   }
 
   return (
@@ -58,13 +58,13 @@ function ScreenB({ navigation }) {
   )
 }
 
-function App() {
+function NavigatorBasics() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        screenOptions={{
-          header: () => null
-        }}
+        // screenOptions={{
+        //   header: () => null
+        // }}
       >
         <Stack.Screen
           name="Screen_A"
@@ -95,4 +95,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default App;
+export default NavigatorBasics;

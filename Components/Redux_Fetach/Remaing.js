@@ -24,11 +24,15 @@ const db = SQLite.openDatabase(
 
 export const Home=({ navigation, route }) =>{
 
-    const [name, setName] = useState('');
-    const [age, setAge] = useState('');
+    const { name, age, cities } = useSelector(state => state.userReducer);
+    const dispatch = useDispatch();
+
+    // const [name, setName] = useState('');
+    // const [age, setAge] = useState('');
 
     useEffect(() => {
         getData();
+        dispatch(getCities());
     }, []);
 
     const getData = () => {
@@ -50,8 +54,8 @@ export const Home=({ navigation, route }) =>{
                         if (len > 0) {
                             var userName = results.rows.item(0).Name;
                             var userAge = results.rows.item(0).Age;
-                            setName(userName);
-                            setAge(userAge);
+                            dispatch(setName(userName));
+                            dispatch(setAge(userAge));
                         }
                     }
                 )
@@ -108,7 +112,17 @@ export const Home=({ navigation, route }) =>{
             ]}>
                 Welcome {name} !
             </Text>
-            <Text style={[
+            <FlatList
+                data={cities}
+                renderItem={({ item }) => (
+                    <View style={styles.item}>
+                        <Text style={styles.title}>{item.country}</Text>
+                        <Text style={styles.subtitle}>{item.city}</Text>
+                    </View>
+                )}
+                keyExtractor={(item, index) => index.toString()}
+            />
+            {/* <Text style={[
                 GlobalStyle.CustomFont,
                 styles.text
             ]}>
@@ -118,7 +132,7 @@ export const Home=({ navigation, route }) =>{
                 style={styles.input}
                 placeholder='Enter your name'
                 value={name}
-                onChangeText={(value) => setName(value)}
+                onChangeText={(value) => dispatch(setName(value))}
             />
             <CustomButton
                 title='Update'
@@ -130,6 +144,11 @@ export const Home=({ navigation, route }) =>{
                 color='#f40100'
                 onPressFunction={removeData}
             />
+            <CustomButton
+                title='Increase Age'
+                color='#0080ff'
+                onPressFunction={()=>{dispatch(increaseAge())}}
+            /> */}
         </View>
     )
 }
@@ -163,135 +182,7 @@ const styles = StyleSheet.create({
 
 export const Login=({ navigation }) => {
 
-    const [name, setName] = useState('');
-    const [age, setAge] = useState('');
-
-    useEffect(() => {
-        createTable();
-        getData();
-    }, []);
-
-    const createTable = () => {
-        db.transaction((tx) => {
-            tx.executeSql(
-                "CREATE TABLE IF NOT EXISTS "
-                + "Users "
-                + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);"
-            )
-        })
-    }
-
-    const getData = () => {
-        try {
-            // AsyncStorage.getItem('UserData')
-            //     .then(value => {
-            //         if (value != null) {
-            //             navigation.navigate('Home');
-            //         }
-            //     })
-            db.transaction((tx) => {
-                tx.executeSql(
-                    "SELECT Name, Age FROM Users",
-                    [],
-                    (tx, results) => {
-                        var len = results.rows.length;
-                        if (len > 0) {
-                            navigation.navigate('Home');
-                        }
-                    }
-                )
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    const setData = async () => {
-        if (name.length == 0 || age.length == 0) {
-            Alert.alert('Warning!', 'Please write your data.')
-        } else {
-            try {
-                // var user = {
-                //     Name: name,
-                //     Age: age
-                // }
-                // await AsyncStorage.setItem('UserData', JSON.stringify(user));
-                await db.transaction(async (tx) => {
-                    // await tx.executeSql(
-                    //     "INSERT INTO Users (Name, Age) VALUES ('" + name + "'," + age + ")"
-                    // );
-                    await tx.executeSql(
-                        "INSERT INTO Users (Name, Age) VALUES (?,?)",
-                        [name, age]
-                    );
-                })
-                navigation.navigate('Home');
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    }
-
-    return (
-        <View style={styles.body} >
-            <Image
-                style={styles.logo}
-                source={require('../../assets/sqlite.png')}
-            />
-            <Text style={styles.text}>
-
-            </Text>
-            <TextInput
-                style={styles.input}
-                placeholder='Enter your name'
-                onChangeText={(value) => setName(value)}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder='Enter your age'
-                onChangeText={(value) => setAge(value)}
-            />
-            <CustomButton
-                title='Login'
-                color='#1eb900'
-                onPressFunction={setData}
-            />
-        </View>
-    )
-}
-
-
-
-
-import React, { useState, useEffect } from 'react';
-import {
-    View,
-    StyleSheet,
-    Image,
-    Text,
-    TextInput,
-    Alert,
-
-} from 'react-native';
-// import Button from '../utils/Button';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { Button } from 'react-native-paper';
-import { Button } from 'react-native-elements';
-import { useSelector, useDispatch } from 'react-redux';
-import { setName,setAge  } from './Redux/Actions';
-import SQLite from 'react-native-sqlite-storage';
-
-
-// const db = SQLite.openDatabase(
-//     {
-//         name: 'MainDB',
-//         location: 'default',
-//     },
-//     () => { },
-//     error => { console.log(error) }
-// );
-
-export const LoginPage = ({navigation}) => {
+   
     const { name, age } = useSelector(state => state.userReducer);
     const dispatch = useDispatch();
 
@@ -368,10 +259,10 @@ export const LoginPage = ({navigation}) => {
 
     return (
         <View style={styles.body} >
-            <Image
+            {/* <Image
                 style={styles.logo}
-                source={'ds'}
-            />
+                source={require('../../assets/redux.png')}
+            /> */}
             <Text style={styles.text}>
                 Redux
             </Text>
@@ -385,8 +276,7 @@ export const LoginPage = ({navigation}) => {
                 placeholder='Enter your age'
                 onChangeText={(value) => dispatch(setAge(value))}
             />
-            <Button
-
+            <CustomButton
                 title='Login'
                 color='#1eb900'
                 onPressFunction={setData}
@@ -394,7 +284,6 @@ export const LoginPage = ({navigation}) => {
         </View>
     )
 }
-
 
 
 
